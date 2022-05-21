@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "initializer_list": "cpp",
+        "__hash_table": "cpp",
+        "array": "cpp",
+        "memory_resource": "cpp",
+        "istream": "cpp",
+        "memory": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp"
+    }
+}
