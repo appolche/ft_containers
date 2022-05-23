@@ -1,6 +1,6 @@
 NAME	=	ft_containers
 
-CC		=	c++
+CC		=	clang++
 FLAGS	=	-Wall -Wextra -Werror -std=c++98
 GCC		=	$(CC) $(FLAGS)
 
