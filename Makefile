@@ -4,7 +4,7 @@ CC		=	clang++
 FLAGS	=	-Wall -Wextra -Werror -std=c++98
 GCC		=	$(CC) $(FLAGS)
 
-SRCS	=	main.cpp
+SRCS	=	main.cpp test.cpp
 HDRS	=	./containers/Vector.hpp
 OBJS	=	$(SRCS:.cpp=.o)
 
