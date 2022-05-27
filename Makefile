@@ -5,7 +5,7 @@ FLAGS	=	-Wall -Wextra -Werror -std=c++98
 GCC		=	$(CC) $(FLAGS)
 
 SRCS	=	main.cpp test.cpp
-HDRS	=	./containers/Vector.hpp
+HDRS	=	./containers/Vector.hpp ./containers/Iterator.hpp
 OBJS	=	$(SRCS:.cpp=.o)
 
 all: $(NAME)
