@@ -1,7 +1,7 @@
 NAME	=	ft_containers
 
 CC		=	clang++
-FLAGS	=	-Wall -Wextra -Werror -std=c++98
+FLAGS	=	-Wall -Wextra -Werror -g -std=c++98
 GCC		=	$(CC) $(FLAGS)
 
 SRCS	=	main.cpp test.cpp

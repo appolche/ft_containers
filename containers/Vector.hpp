@@ -17,10 +17,12 @@ class Vector {
     typedef typename Allocator::const_reference                     const_reference;
     
     Vector()
-    : _array(NULL), _capacity(0), _size(0) {}
+    : _capacity(0), _size(0) {
+        _array = _alloc.allocate(_capacity);
+    }
 
-    explicit Vector(const allocator_type& alloc)
-    : _alloc(alloc), _array(NULL), _capacity(0), _size(0) {};
+    // Vector(const allocator_type& alloc)
+    // : _alloc(alloc), _array(NULL), _capacity(0), _size(0) {};
 
     explicit Vector(size_type size, const T& value = T(), const allocator_type& alloc = allocator_type())
         : _alloc(alloc), _array(NULL), _capacity(size), _size(size){
@@ -54,11 +56,13 @@ class Vector {
     }
 
     ~Vector() { 
-        for (size_type i = 0; i < size(); ++i){
+        for (size_type i = 0; i < _size; ++i){
             _alloc.destroy(_array + i);
         }
-        _size = 0;
         _alloc.deallocate(_array, _capacity); 
+        // _size = 0;
+        // _array = nullptr;
+        // std::cout << "3333" << std::endl;
     }
 
     Vector<T> & operator=(const Vector<T> &rhs) {
@@ -66,12 +70,39 @@ class Vector {
             this->~Vector();
             _size = rhs._size;
             _capacity = rhs._size;
+            _array = _alloc.allocate(rhs._size);
             for (size_type i = 0; i < _size; i++) {
                 _alloc.construct(_array + i, rhs._array[i]);
             }
         }
         return *this;
     }
+
+    reference at(size_type index) {
+        if (index < 0 || index >= _size) {
+            throw std::out_of_range("Index is out of bounds!");
+        }
+        return _array[index];
+    }
+
+    const_reference at(size_type index) const {
+        if (index < 0 || index >= _size) {
+            throw std::out_of_range("Index is out of bounds!");
+        }
+        return _array[index];
+    }
+
+    // std::cout << "ELEMENT ACCESS" << std::endl;
+
+    reference operator[](size_type index) { return _array[index]; }
+    const_reference operator[](size_type index) const { return _array[index]; }
+
+    reference front() { return *_array; }
+    const_reference front() const { return *_array; }
+
+    reference back() { return *(_array + _size - 1); }
+    const_reference back() const{ return *(_array + _size - 1); }
+
 
     allocator_type get_allocator() const { return _alloc; };
     size_type size() const { return _size; }
@@ -80,56 +111,35 @@ class Vector {
     
     
     void reserve(size_type new_cap) {
-        //неправильная реализация
-        if (new_cap > max_size()) {
-            throw std::length_error("New capacity is greater than max_size");
-        }
         if (_capacity >= new_cap) {
             return;
         }
-        T* tmp = _alloc.allocate(new_cap); // = reinter_cast<T*>(new uint8_t[new_cap * sizeof(T)])
-        for (size_type i = 0; i < _size; ++i){
-            _alloc.construct(tmp + i, *(_array + i));
+        if (new_cap > max_size()) {
+            throw std::length_error("New capacity is greater than max_size");
         }
-        for (size_type i = 0; i < size(); ++i) {
+
+        T* tmp = _alloc.allocate(new_cap);
+        try {
+            std::uninitialized_copy(_array, _array + _size, tmp);
+        } catch (const std::exception&) {
+            _alloc.deallocate(tmp, _size);
+            throw;
+        }
+        for (size_type i = 0; i < _size; ++i) {
             _alloc.destroy(_array + i);
         }
-        _alloc.deallocate(_array, _size);
-        // for (size_type i = 0; i < _size; ++i) {
-        //     tmp[i] = _array[i];
-        //     //new(tmp + i) T(arr[i]); // вызывает конст копирования - может кинуть исключение,  / placement new не выделяет память, а кладет обхект типа Т в уже существующую память 
-        // }
-
-        //for (size_type i = 0; i < _size; ++i) {
-        //(arr + i) -> ~T();}
-        //delete[] reint_cast<uint8_t*>(arr);
-        // delete[] _array;
-        this->_capacity = new_cap; //add reinterpret cats to uint8_t*
+        _alloc.deallocate(_array, _capacity);
         this->_array = tmp;
+        this->_capacity = new_cap;
     }
 
     void push_back(const T& new_elem) {
-        // if (_size >= _capacity) {
-        //     reserve(_capacity * 2);
-        // }
-        if (_capacity > _size) {
-            _array[_size] = new_elem;
-            _size++;
+        if (_size == _capacity) {
+            size_type new_cap = (_capacity == 0) ? 1 : _capacity *= 2; 
+            reserve(new_cap);
         }
-        else {
-            if (_capacity == _size) { 
-                _capacity = (_capacity == 0) ? 1 : _capacity *= 2; 
-            }
-            T* tmp = new T[_capacity];
-            for (size_type i = 0; i < _size; ++i) {
-                tmp[i] = _array[i];
-            }
-            tmp[_size] = new_elem;
-            //new(tmp + _size) T(value); // placement new не выделяет память, а кладет обхект типа Т в уже существующую память 
-            delete[] _array;
-            _array = tmp;
-            ++_size;
-        }
+        _alloc.construct(_array + _size, new_elem);
+        ++_size;
     }
 
     void pop_back() {
@@ -190,28 +200,8 @@ class Vector {
         _size = 0;
     }
 
-    reference at(size_type index) {
-        if (index < 0 || index >= _size) {
-            throw std::out_of_range("Index is out of bounds!");
-        }
-        return _array[index];
-    }
 
-    const_reference at(size_type index) const {
-        if (index < 0 || index >= _size) {
-            throw std::out_of_range("Index is out of bounds!");
-        }
-        return _array[index];
-    }
 
-    reference operator[](size_type index) { return _array[index]; }
-    const_reference operator[](size_type index) const { return _array[index]; }
-
-    reference front() { return *_array; }
-    const_reference front() const { return *_array; }
-
-    reference back() { return *(_array + _size - 1); }
-    const_reference back() const{ return *(_array + _size - 1); }
 
     bool empty() const { return _size > 0 ? false : true; }
 
