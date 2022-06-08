@@ -16,14 +16,16 @@ namespace ft {
             typedef typename Allocator::const_pointer                       const_pointer;
             typedef typename Allocator::reference                           reference;
             typedef typename Allocator::const_reference                     const_reference;
-
+            
             typedef ft::RandomAccessIterator<T>                             iterator;
             typedef ft::RandomAccessIterator<const T>                       const_iterator;
-            typedef ft::ReverseIterator<T>                                  reverse_iterator;
-            typedef ft::ReverseIterator<const T>                            const_reverse_iterator;
 
             typedef typename ft::iterator_traits<iterator>::difference_type difference_type;
             typedef typename ft::iterator_traits<iterator>::value_type      value_type;
+
+            typedef ft::ReverseIterator<T>                                  reverse_iterator;
+            typedef ft::ReverseIterator<const T>                            const_reverse_iterator;
+
             
             Vector()
             : _array(NULL), _capacity(0), _size(0) {}
@@ -204,7 +206,7 @@ namespace ft {
                 }
                 _size = 0;
             }
-            
+
             iterator insert(iterator pos, const value_type& value) {
                 size_type insertIdx = static_cast<size_type>(std::distance(begin(), pos));
                 insert(pos, 1, value);
@@ -235,6 +237,68 @@ namespace ft {
                         _size++;
                     }
                 }
+            }
+
+            // template <class InputIt>
+            // void insert(iterator pos, InputIt first, InputIt last,
+            //             typename ft::enable_if<!ft::is_integral<InputIt>::value,
+            //                                     InputIt>::type* = NULL) {
+            //     try {
+            //     InputIt s = first;
+            //     while (s < last) {
+            //         value_type x = *s++;
+            //     }
+            //     } catch (...) {
+            //     throw;
+            //     }
+            //     size_type count = static_cast<size_type>(std::distance(first, last));
+            //     if (count == 0) return;
+            //     size_type insertIdx = static_cast<size_type>(std::distance(begin(), pos));
+            //     if (size() + count > capacity()) {
+            //     int newCapacity =
+            //         capacity() * 2 >= size() + count ? capacity() * 2 : size() + count;
+            //     reserve(newCapacity);
+            //     }
+            //     if (empty()) {
+            //     assign(first, last);
+            //     } else {
+            //     for (size_type i = size() - 1; i >= insertIdx; --i) {
+            //         _alloc.construct(_arr + i + count, _arr[i]);
+            //         if (i == 0) break;
+            //     }
+            //     for (size_type i = 0; i < count; ++i) {
+            //         _alloc.construct(_arr + insertIdx++, *first++);
+            //         _size++;
+            //     }
+            //     }
+            // };
+            
+            iterator erase(iterator pos) {
+                size_type deletedIndex = static_cast<size_type>(std::distance(begin(), pos));
+                for (size_type i = deletedIndex; i < _size - 1; ++i) {
+                    _alloc.construct(_array + i, _array[i + 1]);
+                }
+                _alloc.destroy(_array + _size - 1);
+                _size--;
+                return iterator(_array + deletedIndex);
+            };
+
+            iterator erase(iterator first, iterator last) {
+                if (first == last) {
+                    return last;
+                }
+                size_type deletionStartIndex = static_cast<size_type>(std::distance(begin(), first));
+                size_type valueToMoveIndex = static_cast<size_type>(std::distance(begin(), last));
+                size_type count = valueToMoveIndex - deletionStartIndex;
+
+                for (size_type i = deletionStartIndex; valueToMoveIndex < _size; i++) {
+                    _alloc.construct(_array + i, _array[valueToMoveIndex++]);
+                }
+                for (size_type i = size() - count; i < _size; i++) {
+                    _alloc.destroy(_array + i);
+                }
+                _size -= count;
+                return iterator(_array + deletionStartIndex);
             }
 
             void push_back(const value_type& new_elem) {

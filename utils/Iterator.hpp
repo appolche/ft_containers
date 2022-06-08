@@ -22,24 +22,13 @@ namespace ft {
     };
 
     template <typename T>
-    struct iterator_traits<const T*> {
-      typedef ptrdiff_t                       difference_type;
-      typedef T                               value_type;
-      typedef const T*                        const_pointer;
-      typedef const T&                        const_reference;
-      typedef std::random_access_iterator_tag iterator_category;
-    };
-
-    template <typename T>
     class RandomAccessIterator {
       public:
-        typedef typename std::random_access_iterator_tag iterator_category;
         typedef std::ptrdiff_t                           difference_type; //std::ptrdiff_t тип х-зующий разницу между итераторами (типа инта)
         typedef T                                        value_type;
         typedef T*                                       pointer;
-        typedef const T*                                 const_pointer;
         typedef T&                                       reference;
-        typedef const T&                                 const_reference;
+        typedef typename std::random_access_iterator_tag iterator_category;
 
         RandomAccessIterator() : _ptr(NULL) {};
         RandomAccessIterator(pointer ptr) : _ptr(ptr) {};
@@ -52,9 +41,6 @@ namespace ft {
 
         reference operator*() { return *_ptr; }
         pointer operator->() { return _ptr; }
-
-        const_reference operator*() const { return *_ptr; }
-        const_pointer operator->() const { return _ptr; }
 
         RandomAccessIterator operator++() {
           ++_ptr;
@@ -147,9 +133,7 @@ namespace ft {
         typedef T                                         value_type;
         typedef std::ptrdiff_t                            difference_type;
         typedef T*                                        pointer;
-        typedef const T*                                  const_pointer;
         typedef T&                                        reference;
-        typedef const T&                                  const_reference;
 
         ReverseIterator() : _ptr(NULL){};
         ReverseIterator(pointer ptr) : _ptr(ptr){};
@@ -162,9 +146,6 @@ namespace ft {
 
         reference operator*() { return *_ptr; }
         pointer operator->() { return _ptr; }
-
-        const_reference operator*() const { return *_ptr; }
-        const_pointer operator->() const { return _ptr; }
 
         ReverseIterator operator++() {
           --_ptr;
