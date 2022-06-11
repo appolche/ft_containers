@@ -32,6 +32,7 @@ void vector_test() {
             std::cout << "Size: " << myVector.size() << " Cap: " << myVector.capacity() << " Max_size: " << myVector.max_size() << std::endl;
         }
     }
+    
     std::cout << "\n  2b. WITH SIZE ONLY" << std::endl;
     {
         std::vector<int> v(5);
@@ -379,7 +380,6 @@ void vector_test() {
         for(size_t i = 0; i < c.size(); ++i) {
             std::cout << c[i] << ' ';}
         std::vector<int>::const_iterator it = c.begin();
-        std::vector<int>::const_iterator ite = c.end();
         c.erase(it);
         std::cout << "\nSTL: The vector after erase(): ";
         for(size_t i = 0; i < c.size(); ++i) {
@@ -396,7 +396,6 @@ void vector_test() {
         for(size_t i = 0; i < myVector.size(); ++i) {
             std::cout << myVector[i] << ' ';}
         Vector<int>::iterator it = myVector.begin();
-        Vector<int>::iterator ite = myVector.end();
         myVector.erase(it);
         std::cout << "\nMY: The vector after erase(): ";
         for(size_t i = 0; i < myVector.size(); ++i) {
@@ -531,7 +530,6 @@ void vector_test() {
         for(size_t i = 0; i < c.size(); ++i) {
             std::cout << c[i] << ' ';}
         std::vector<int>::const_iterator it = c.begin();
-        std::vector<int>::const_iterator ite = c.end();
         c.insert(it, 6);
         std::cout << "\nSTL: The vector after insert(pos, value): ";
         for(size_t i = 0; i < c.size(); ++i) {
@@ -548,7 +546,6 @@ void vector_test() {
         for(size_t i = 0; i < myVector.size(); ++i) {
             std::cout << myVector[i] << ' ';}
         Vector<int>::iterator it = myVector.begin();
-        Vector<int>::iterator ite = myVector.end();
         myVector.insert(it, 6);
         std::cout << "\nMY:  The vector after insert(pos, value): ";
         for(size_t i = 0; i < myVector.size(); ++i) {
@@ -569,10 +566,9 @@ void vector_test() {
         for(size_t i = 0; i < c.size(); ++i) {
             std::cout << c[i] << ' ';}
         std::vector<int>::const_iterator it = c.begin();
-        std::vector<int>::const_iterator ite = c.end();
         c.insert(it, 3, 6);
         std::cout << "\nSTL: The vector after insert(pos, count, value): ";
-        for(size_t i = 0; i < c.size(); ++i) {
+        for (size_t i = 0; i < c.size(); ++i) {
             std::cout << c[i] << " ";
         }
         std::cout << "Size: " << c.size() << "\n";
@@ -583,13 +579,12 @@ void vector_test() {
         myVector.push_back(3);
 
         std::cout << "MY:  The vector holds: ";
-        for(size_t i = 0; i < myVector.size(); ++i) {
+        for (size_t i = 0; i < myVector.size(); ++i) {
             std::cout << myVector[i] << ' ';}
         Vector<int>::iterator it = myVector.begin();
-        Vector<int>::iterator ite = myVector.end();
         myVector.insert(it, 3, 6);
         std::cout << "\nMY:  The vector after insert(pos, count, value): ";
-        for(size_t i = 0; i < myVector.size(); ++i) {
+        for (size_t i = 0; i < myVector.size(); ++i) {
             std::cout << myVector[i] << " ";
         }
         std::cout << "Size: " << myVector.size() << "\n";
@@ -597,66 +592,61 @@ void vector_test() {
     }
     std::cout << "\n*****************************\n*        OPERATORS       *\n*****************************" << std::endl;
     {
-		std::cout << "compare operators test" << std::endl;
-		std::vector<int> std_vec1, std_vec2, std_vec3;
-		ft::Vector<int> ft_vec1, ft_vec2, ft_vec3;
-		std_vec1.push_back(1); std_vec1.push_back(2); std_vec1.push_back(3);
-		std_vec2.push_back(1); std_vec2.push_back(2);
-		std_vec3.push_back(1); std_vec3.push_back(2); std_vec3.push_back(4);
-		ft_vec1.push_back(1); ft_vec1.push_back(2); ft_vec1.push_back(3);
-		ft_vec2.push_back(1); ft_vec2.push_back(2);
-		ft_vec3.push_back(1); ft_vec3.push_back(2); ft_vec3.push_back(4);
+		std::vector<int> v1, v2, v3;
+		ft::Vector<int> myVector1, myVector2, myVector3;
+		v1.push_back(1); v1.push_back(2); v1.push_back(3);
+		v2.push_back(1); v2.push_back(2);
+		v3.push_back(1); v3.push_back(2); v3.push_back(4);
+		myVector1.push_back(1); myVector1.push_back(2); myVector1.push_back(3);
+		myVector2.push_back(1); myVector2.push_back(2);
+		myVector3.push_back(1); myVector3.push_back(2); myVector3.push_back(4);
 
-		std::cout << "[std] compare 1 2 3 with 1 2" << std::endl;
-		std::cout << "== : " << (std_vec1 == std_vec2) << std::endl;
-		std::cout << "!= : " << (std_vec1 != std_vec2) << std::endl;
-		std::cout << "< : " << (std_vec1 < std_vec2) << std::endl;
-		std::cout << "> : " << (std_vec1 > std_vec2) << std::endl;
-		std::cout << "<= : " << (std_vec1 <= std_vec2) << std::endl;
-		std::cout << ">= : " << (std_vec1 >= std_vec2) << std::endl;
-		std::cout << "[ft] compare 1 2 3 with 1 2" << std::endl;
-		std::cout << "== : " << (ft_vec1 == ft_vec2) << std::endl;
-		std::cout << "!= : " << (ft_vec1 != ft_vec2) << std::endl;
-		std::cout << "< : " << (ft_vec1 < ft_vec2) << std::endl;
-		std::cout << "> : " << (ft_vec1 > ft_vec2) << std::endl;
-		std::cout << "<= : " << (ft_vec1 <= ft_vec2) << std::endl;
-		std::cout << ">= : " << (ft_vec1 >= ft_vec2) << std::endl;
+        std::cout << "\n  1. COMPARE OPERATORS " << std::endl;
+		std::cout << "[STL] compare 1 2 3 with 1 2" << std::endl;
+		std::cout << "== : " << (v1 == v2) << std::endl;
+		std::cout << "!= : " << (v1 != v2) << std::endl;
+		std::cout << "< :  " << (v1 < v2) << std::endl;
+		std::cout << "> :  " << (v1 > v2) << std::endl;
+		std::cout << "<= : " << (v1 <= v2) << std::endl;
+		std::cout << ">= : " << (v1 >= v2) << std::endl;
+		std::cout << "[MY]  compare 1 2 3 with 1 2" << std::endl;
+		std::cout << "== : " << (myVector1 == myVector2) << std::endl;
+		std::cout << "!= : " << (myVector1 != myVector2) << std::endl;
+		std::cout << "< :  " << (myVector1 < myVector2) << std::endl;
+		std::cout << "> :  " << (myVector1 > myVector2) << std::endl;
+		std::cout << "<= : " << (myVector1 <= myVector2) << std::endl;
+		std::cout << ">= : " << (myVector1 >= myVector2) << std::endl;
 
-		std::cout << "[std] compare 1 2 3 with 1 2 4" << std::endl;
-		std::cout << "== : " << (std_vec1 == std_vec3) << std::endl;
-		std::cout << "!= : " << (std_vec1 != std_vec3) << std::endl;
-		std::cout << "< : " << (std_vec1 < std_vec3) << std::endl;
-		std::cout << "> : " << (std_vec1 > std_vec3) << std::endl;
-		std::cout << "<= : " << (std_vec1 <= std_vec3) << std::endl;
-		std::cout << ">= : " << (std_vec1 >= std_vec3) << std::endl;
-		std::cout << "[ft] compare 1 2 3 with 1 2 4" << std::endl;
-		std::cout << "== : " << (ft_vec1 == ft_vec3) << std::endl;
-		std::cout << "!= : " << (ft_vec1 != ft_vec3) << std::endl;
-		std::cout << "< : " << (ft_vec1 < ft_vec3) << std::endl;
-		std::cout << "> : " << (ft_vec1 > ft_vec3) << std::endl;
-		std::cout << "<= : " << (ft_vec1 <= ft_vec3) << std::endl;
-		std::cout << ">= : " << (ft_vec1 >= ft_vec3) << std::endl;
+		std::cout << "[STL] compare 1 2 3 with 1 2 4" << std::endl;
+		std::cout << "== : " << (v1 == v3) << std::endl;
+		std::cout << "!= : " << (v1 != v3) << std::endl;
+		std::cout << "< :  " << (v1 < v3) << std::endl;
+		std::cout << "> :  " << (v1 > v3) << std::endl;
+		std::cout << "<= : " << (v1 <= v3) << std::endl;
+		std::cout << ">= : " << (v1 >= v3) << std::endl;
+		std::cout << "[MY]  compare 1 2 3 with 1 2 4" << std::endl;
+		std::cout << "== : " << (myVector1 == myVector3) << std::endl;
+		std::cout << "!= : " << (myVector1 != myVector3) << std::endl;
+		std::cout << "< :  " << (myVector1 < myVector3) << std::endl;
+		std::cout << "> :  " << (myVector1 > myVector3) << std::endl;
+		std::cout << "<= : " << (myVector1 <= myVector3) << std::endl;
+		std::cout << ">= : " << (myVector1 >= myVector3) << std::endl;
 
-		std::vector<int> std_vec_copy(std_vec1);
-		ft::Vector<int> ft_vec_copy(ft_vec1);
-		std::cout << "compare equal vectors" << std::endl;
-		std::cout << "[std]" << std::endl;
-		std::cout << "== : " << (std_vec1 == std_vec_copy) << std::endl;
-		std::cout << "!= : " << (std_vec1 != std_vec_copy) << std::endl;
-		std::cout << "< : " << (std_vec1 < std_vec_copy) << std::endl;
-		std::cout << "> : " << (std_vec1 > std_vec_copy) << std::endl;
-		std::cout << "<= : " << (std_vec1 <= std_vec_copy) << std::endl;
-		std::cout << ">= : " << (std_vec1 >= std_vec_copy) << std::endl;
-		std::cout << "[ft]" << std::endl;
-		std::cout << "== : " << (ft_vec1 == ft_vec_copy) << std::endl;
-		std::cout << "!= : " << (ft_vec1 != ft_vec_copy) << std::endl;
-		std::cout << "< : " << (ft_vec1 < ft_vec_copy) << std::endl;
-		std::cout << "> : " << (ft_vec1 > ft_vec_copy) << std::endl;
-		std::cout << "<= : " << (ft_vec1 <= ft_vec_copy) << std::endl;
-		std::cout << ">= : " << (ft_vec1 >= ft_vec_copy) << std::endl;
+		std::vector<int> v_copy(v1);
+		ft::Vector<int> myVector_copy(myVector1);
+		std::cout << "[STL] compare equal vectors" << std::endl;
+		std::cout << "== : " << (v1 == v_copy) << std::endl;
+		std::cout << "!= : " << (v1 != v_copy) << std::endl;
+		std::cout << "< :  " << (v1 < v_copy) << std::endl;
+		std::cout << "> :  " << (v1 > v_copy) << std::endl;
+		std::cout << "<= : " << (v1 <= v_copy) << std::endl;
+		std::cout << ">= : " << (v1 >= v_copy) << std::endl;
+		std::cout << "[MY]  compare equal vectors" << std::endl;
+		std::cout << "== : " << (myVector1 == myVector_copy) << std::endl;
+		std::cout << "!= : " << (myVector1 != myVector_copy) << std::endl;
+		std::cout << "< :  " << (myVector1 < myVector_copy) << std::endl;
+		std::cout << "> :  " << (myVector1 > myVector_copy) << std::endl;
+		std::cout << "<= : " << (myVector1 <= myVector_copy) << std::endl;
+		std::cout << ">= : " << (myVector1 >= myVector_copy) << std::endl;
 	}
-
-    
-// insert, assign, construct (input it, enaable if, is integral), operators
-
 }

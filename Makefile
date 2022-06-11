@@ -4,8 +4,8 @@ CC		=	clang++
 FLAGS	=	-Wall -Wextra -Werror -g -std=c++98
 GCC		=	$(CC) $(FLAGS)
 
-SRCS	=	main.cpp test.cpp
-HDRS	=	./containers/Vector.hpp ./containers/Iterator.hpp
+SRCS	=	main.cpp vector_test.cpp stack_test.cpp
+HDRS	=	./containers/Vector.hpp ./containers/Stack.hpp ./utils/Iterator.hpp ./utils/Type_traits.hpp ./utils/Equal.hpp ./utils/Pair.hpp
 OBJS	=	$(SRCS:.cpp=.o)
 
 all: $(NAME)
