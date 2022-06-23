@@ -1,15 +1,22 @@
 #include "./containers/Vector.hpp"
 #include "./containers/Stack.hpp"
+#include "./containers/Map.hpp"
 #include "./utils/Iterator.hpp"
+#include "./utils/RBTree.hpp"
+#include "./utils/Pair.hpp"
 #include <vector>
 #include <iostream>
 
+using namespace ft;
+
 int main() {
 	std::cout << "<3 <3 <3 VECTOR TESTS <3 <3 <3			" << std::endl;
-    vector_test();
+   //  vector_test();
 	std::cout << "\n<3 <3 <3 STACK TESTS <3 <3 <3			" << std::endl;
-
-	 stack_test();
+	ft::map<char, int> m;
+	m.insert(ft::make_pair('A', 5));
+	
+	//  stack_test();x
 
     // std::vector<int> v;
     // v.push_back(1);

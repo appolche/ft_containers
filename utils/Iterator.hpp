@@ -11,20 +11,20 @@ namespace ft
 
 	template <typename Iterator>
 	struct iterator_traits {
-		typedef typename Iterator::difference_type difference_type;
-		typedef typename Iterator::value_type value_type;
-		typedef typename Iterator::pointer pointer;
-		typedef typename Iterator::reference reference;
-		typedef typename Iterator::iterator_category iterator_category;
+		typedef typename Iterator::difference_type	difference_type;
+		typedef typename Iterator::value_type			value_type;
+		typedef typename Iterator::pointer				pointer;
+		typedef typename Iterator::reference			reference;
+		typedef typename Iterator::iterator_category	iterator_category;
 	};
 
 	template <typename T>
-	struct iterator_traits<T *> {
-		typedef ptrdiff_t difference_type;
-		typedef T value_type;
-		typedef T *pointer;
-		typedef T &reference;
-		typedef std::random_access_iterator_tag iterator_category;
+	struct iterator_traits<T*> {
+		typedef std::ptrdiff_t								difference_type;
+		typedef T												value_type;
+		typedef T*												pointer;
+		typedef T&												reference;
+		typedef std::random_access_iterator_tag		iterator_category;
 	};
 
 	/*
@@ -36,11 +36,11 @@ namespace ft
 	template <typename T>
 	class RandomAccessIterator {
 		public:
-			typedef std::ptrdiff_t difference_type; // std::ptrdiff_t тип х-зующий разницу между итераторами (типа инта)
-			typedef T value_type;
-			typedef T *pointer;
-			typedef T &reference;
-			typedef typename std::random_access_iterator_tag iterator_category;
+			typedef typename ft::iterator_traits<T*>::value_type			value_type;
+			typedef typename ft::iterator_traits<T*>::pointer				pointer;
+			typedef typename ft::iterator_traits<T*>::reference			reference;
+			typedef typename ft::iterator_traits<T*>::difference_type	difference_type;
+			typedef typename std::random_access_iterator_tag				iterator_category;
 
 			RandomAccessIterator() : _ptr(NULL) {}
 			RandomAccessIterator(pointer ptr) : _ptr(ptr) {}
@@ -143,8 +143,8 @@ namespace ft
 			typedef typename std::random_access_iterator_tag iterator_category;
 			typedef T value_type;
 			typedef std::ptrdiff_t difference_type;
-			typedef T *pointer;
-			typedef T &reference;
+			typedef T* pointer;
+			typedef T& reference;
 
 			ReverseIterator() : _ptr(NULL) {};
 			ReverseIterator(pointer ptr) : _ptr(ptr) {};

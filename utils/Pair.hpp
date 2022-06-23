@@ -9,7 +9,7 @@ namespace ft
 	struct Pair
 	{
 		typedef T1 first_type;
-		typedef T2 second_type;
+		typedef T2 second_type; 
 
 		Pair() : first(), second() {};
 
