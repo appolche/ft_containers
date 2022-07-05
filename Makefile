@@ -1,16 +1,19 @@
 NAME	=	ft_containers
 
 CC		=	clang++
-FLAGS	=	-Wall -Wextra -Werror -g -std=c++98
+FLAGS	=	-Wall -Wextra -Werror -std=c++98
 GCC		=	$(CC) $(FLAGS)
 
 SRCS	=	main.cpp vector_test.cpp stack_test.cpp
-HDRS	=	./containers/Vector.hpp ./containers/Stack.hpp ./utils/Iterator.hpp ./utils/Type_traits.hpp ./utils/Equal.hpp ./utils/Pair.hpp
+CONT_HDRS	=	./containers/Vector.hpp ./containers/Stack.hpp ./containers/Map.hpp \
+UTIL_HDRS	=	./utils/Iterator.hpp ./utils/Type_traits.hpp ./utils/Equal.hpp ./utils/Pair.hpp ./utils/RBTree.hpp \
+					./utils/RBTree_iterator.hpp ./utils/Node.hpp
+
 OBJS	=	$(SRCS:.cpp=.o)
 
 all: $(NAME)
 
-%.o:		%.cpp $(HDRS)
+%.o:		%.cpp $(CONT_HDRS) $(UTIL_HDRS)
 			$(GCC) -c -o $@ $<
 
 $(NAME):	$(OBJS)

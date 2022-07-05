@@ -9,11 +9,6 @@
 namespace ft {
 	template <typename T, class Allocator = std::allocator<T> >
 	class Vector {
-		/*
-		=========================================================================
-		Member types
-		=========================================================================
-		*/
 		public:
 			typedef Allocator                                               allocator_type;
 			typedef typename Allocator::size_type                           size_type;
@@ -268,26 +263,26 @@ namespace ft {
 			template <class InputIt>
 			void insert(iterator pos, InputIt first, InputIt last, 
 							typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = NULL) {
-			try{
-				InputIt s = first;
-				while (s < last) {
-					value_type x = *s++;
+				try{
+					InputIt s = first;
+					while (s < last) {
+						value_type x = *s++;
+					}
+				} catch (...) {
+					throw;
 				}
-			} catch (...) {
-				throw;
-			}
-			size_type count = static_cast<size_type>(std::distance(first, last));
-			if (count == 0) {
-				return;
-			}
-			size_type insertIdx = static_cast<size_type>(std::distance(begin(), pos));
-			if (_size + count > _capacity) {
-				int newCapacity = _capacity * 2 >= _size + count ? _capacity * 2 : _size + count;
-				reserve(newCapacity);
-			}
-			if (empty()) {
-				assign(first, last);
-			} else {
+				size_type count = static_cast<size_type>(std::distance(first, last));
+				if (count == 0) {
+					return;
+				}
+				size_type insertIdx = static_cast<size_type>(std::distance(begin(), pos));
+				if (_size + count > _capacity) {
+					int newCapacity = _capacity * 2 >= _size + count ? _capacity * 2 : _size + count;
+					reserve(newCapacity);
+				}
+				if (empty()) {
+					assign(first, last);
+				} else {
 					for (size_type i = _size - 1; i >= insertIdx; --i) {
 						_alloc.construct(_array + i + count, _array[i]);
 						if (i == 0) {
@@ -426,10 +421,10 @@ namespace ft {
 			}
 
 		private:
-			allocator_type _alloc;
-			value_type*    _array;
-			size_type      _capacity;
-			size_type      _size;
+			allocator_type	_alloc;
+			value_type*		_array;
+			size_type		_capacity;
+			size_type		_size;
 	};
 } // namespace ft
 
