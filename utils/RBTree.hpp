@@ -155,7 +155,7 @@ namespace ft {
 				} else {
 					ptr->right = elem;
 				}
-				insert_fixup_(elem);
+				balance_after_insert(elem);
 				_size++;
 				return ft::make_pair(iterator(elem, _root), true);
 			}
@@ -543,61 +543,57 @@ namespace ft {
 					b->parent = Y;
 			}
 
-			void insert_fixup_(node_ptr elem)
-			{
+			void balance_after_insert(node_ptr elem) {
 				if (!elem || !elem->parent || !elem->parent->parent)
 					return;
 
-				while (elem != _root && elem->parent->color == RED)
-				{
-					if (elem->parent == elem->parent->parent->left)
-					{
-						node_ptr y = elem->parent->parent->right;
+				node_ptr parent = elem->parent;
+				node_ptr grandParent = elem->parent->parent;
 
-						if (y && y->color == RED)
-						{
-							elem->parent->color = BLACK;
-							y->color = BLACK;
-							elem->parent->parent->color = RED;
-							elem = elem->parent->parent;
-						}
-						else
-						{
-							if (elem == elem->parent->right)
-							{
-								elem = elem->parent;
+				if (elem->color == RED && parent->color == RED) {
+					rotate();
+					color_check();
+				} else {
+					color_flip();
+				}
+
+				while (elem != _root && parent->color == RED) {
+					if (parent == grandParent->left) {
+						node_ptr aunt = grandParent->right;
+
+						if (aunt && aunt->color == RED) {
+							parent->color = BLACK;
+							aunt->color = BLACK;
+							grandParent->color = RED;
+							elem = grandParent;
+						} else {
+							if (elem == parent->right) {
+								elem = parent;
 								rotate_left_(elem);
 							}
-							elem->parent->color = BLACK;
-							elem->parent->parent->color = RED;
-							rotate_right_(elem->parent->parent);
+							parent->color = BLACK;
+							grandParent->color = RED;
+							rotate_right_(grandParent);
 						}
-					}
-					else
-					{
-						node_ptr y = elem->parent->parent->left;
+					} else {
+						node_ptr aunt = grandParent->left;
 
-						if (y && y->color == RED)
-						{
-							elem->parent->color = BLACK;
-							y->color = BLACK;
-							elem->parent->parent->color = RED;
-							elem = elem->parent->parent;
-						}
-						else
-						{
-							if (elem == elem->parent->left)
-							{
-								elem = elem->parent;
+						if (aunt && aunt->color == RED) {
+							parent->color = BLACK;
+							aunt->color = BLACK;
+							grandParent->color = RED;
+							elem = grandParent;
+						} else {
+							if (elem == parent->left) {
+								elem = parent;
 								rotate_right_(elem);
 							}
-							elem->parent->color = BLACK;
-							elem->parent->parent->color = RED;
-							rotate_left_(elem->parent->parent);
+							parent->color = BLACK;
+							grandParent->color = RED;
+							rotate_left_(grandParent);
 						}
 					}
 				}
-
 				_root->color = BLACK;
 			}
 
