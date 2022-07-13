@@ -1,53 +1,42 @@
 #ifndef NODE_HPP
 #define NODE_HPP
 
-// #define RED true
-// #define BLACK false
+#define RED		true
+#define BLACK	false
 
 namespace ft {
-
-	enum Color{
-		RED,
-		BLACK
-	};
-
 	template<typename T>
 	struct Node{
-		Node() : value(T()), color(RED), left(NULL), right(NULL), parent(NULL) {
+		Node() : value(T()), color(RED), left(NULL), right(NULL), parent(NULL) {}
 
-		}
-		Node(const T& value) : value(value), color(RED),
-										left(NULL), right(NULL), parent(NULL) {
+		Node(const T& value) : value(value), color(RED), 
+		left(NULL), right(NULL), parent(NULL) {}
 
-		}
-		Node(const Node& another) 
-			: value(another.value), color(another.color),
-					left(another.left), right(another.right), parent(another.parent) {
-			
-		}
-		Node(Node* left, Node* right, Node* parent, const T& value, Color color)
-			: left(left), right(right), parent(parent), value(value), color(color) {
-			
-		}
-		~Node(){
+		Node(const Node& rhs) 
+		: value(rhs.value), color(rhs.color), 
+		left(rhs.left), right(rhs.right), parent(rhs.parent) {}
 
-		}
+		Node(Node* left, Node* right, Node* parent, const T& value, bool color)
+		: left(left), right(right), parent(parent), value(value), color(color) {}
 
-		Node& operator=(const Node& another){
-			value = another.value;
-			color = another.color;
-			left = another.left;
-			right = another.right;
-			parent = another.parent;
+		~Node() {}
 
+		Node& operator=(const Node& rhs) {
+			if (this != rhs) {
+				value = rhs.value;
+				color = rhs.color;
+				left = rhs.left;
+				right = rhs.right;
+				parent = rhs.parent;
+			}
 			return *this;
 		}
 
-		T value;
-		Color color;
-		Node* left;
-		Node* right;
-		Node* parent;
+		T		value;
+		bool	color;
+		Node*	left;
+		Node*	right;
+		Node*	parent;
 	};  // NODE
 }
 

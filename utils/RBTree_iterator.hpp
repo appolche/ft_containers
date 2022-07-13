@@ -16,110 +16,129 @@ namespace ft {
 		typedef value_type*                                         pointer;
 		typedef typename std::bidirectional_iterator_tag            iterator_category;
 
-		rbtree_iterator(){
+		rbtree_iterator() {
 			root_ = NULL;
 			base_ = NULL;
 		}
-		rbtree_iterator(const rbtree_iterator& another){
-			root_ = another.root_;
-			base_ = another.base_;
+
+		rbtree_iterator(const rbtree_iterator& rhs) {
+			root_ = rhs.root_;
+			base_ = rhs.base_;
 		}
-		rbtree_iterator(node_type* base, node_type* root){
+
+		rbtree_iterator(node_type* base, node_type* root) {
 			root_ = root;
 			base_ = base;
 		}
-		~rbtree_iterator(){
 
-		}
+		~rbtree_iterator(){}
 
-		rbtree_iterator& operator=(const rbtree_iterator& another){
-			root_ = another.root_;
-			base_ = another.base_;
+		rbtree_iterator& operator=(const rbtree_iterator& rhs) {
+			root_ = rhs.root_;
+			base_ = rhs.base_;
 
 			return *this;
 		}
-		bool operator==(const rbtree_iterator& another){
-			return base_ == another.base_;
-		}
-		bool operator!=(const rbtree_iterator& another){
-			return !(*this == another);
+
+		bool operator==(const rbtree_iterator& rhs) {
+			return base_ == rhs.base_;
 		}
 
+		bool operator!=(const rbtree_iterator& rhs) {
+			return !(*this == rhs);
+		}
+ 
 		node_type* base() const {
 			return base_;
 		}
 
 		reference operator*() const {
-			if (base_ == NULL){
+			if (base_ == NULL) {
 					return max_()->value;
 			}
-
 			return base_->value;
 		}
+
 		pointer operator->() const {
-			if (base_ == NULL){
+			if (base_ == NULL) {
 					return &max_()->value;
 			}
-
 			return &base_->value;
 		}
 		
-		rbtree_iterator& operator++(){
-			if (!base_) return *this;
+		rbtree_iterator& operator++() {
+			if (!base_) {
+				return *this;
+			}
 
-			if (base_->right){
+			if (base_->right) {
 					base_ = base_->right;
 					while (base_->left) base_ = base_->left;
 					return *this;
 			}
-			while (base_->parent && base_ == base_->parent->right) base_ = base_->parent;
+			while (base_->parent && base_ == base_->parent->right) {
+				base_ = base_->parent;
+			}
 			base_ = base_->parent;
 
 			return *this;
 		}
-		rbtree_iterator& operator--(){
-			if (!base_){
+
+		rbtree_iterator& operator--() {
+			if (!base_) {
 					base_ = max_();
 					return *this;
 			}
 
-			if (base_->left){
+			if (base_->left) {
 					base_ = base_->left;
 					while (base_->right) base_ = base_->right;
 					return *this;
 			}
-			while (base_->parent && base_ == base_->parent->left) base_ = base_->parent;
+			while (base_->parent && base_ == base_->parent->left) {
+				base_ = base_->parent;
+			}
 			base_ = base_->parent;
 
 			return *this;
 		}
-		rbtree_iterator operator++(int){
+		rbtree_iterator operator++(int) {
 			rbtree_iterator tmp = *this;
-			if (!base_) return tmp;
-			
-			if (base_->right){
+			if (!base_) {
+				return tmp;
+			}
+			if (base_->right) {
 					base_ = base_->right;
-					while (base_->left) base_ = base_->left;
+					while (base_->left) {
+						base_ = base_->left;
+					}
 					return tmp;
 			}
-			while (base_->parent && base_ == base_->parent->right) base_ = base_->parent;
+			while (base_->parent && base_ == base_->parent->right) {
+				base_ = base_->parent;
+			}
 			base_ = base_->parent;
 
 			return tmp;
 		}
-		rbtree_iterator operator--(int){
+
+		rbtree_iterator operator--(int) {
 			rbtree_iterator tmp = *this;
-			if (!base_){
+			if (!base_) {
 					base_ = max_();
 					return tmp;
 			}
 			
-			if (base_->left){
+			if (base_->left) {
 					base_ = base_->left;
-					while (base_->right) base_ = base_->right;
+					while (base_->right) {
+						base_ = base_->right;
+					}
 					return tmp;
 			}
-			while (base_->parent && base_ == base_->parent->left) base_ = base_->parent;
+			while (base_->parent && base_ == base_->parent->left) {
+				base_ = base_->parent;
+			}
 			base_ = base_->parent;
 
 			return tmp;
@@ -130,10 +149,11 @@ namespace ft {
 		node_type* base_;
 
 		node_type* max_() const {
-			if (root_ == NULL) return NULL;
-
+			if (root_ == NULL) {
+				return NULL;
+			}
 			node_type* ptr = root_;
-			while (ptr->right){
+			while (ptr->right) {
 					ptr = ptr->right;
 			}
 
@@ -152,33 +172,34 @@ namespace ft {
 		typedef value_type*                                         pointer;
 		typedef typename std::bidirectional_iterator_tag            iterator_category;
 
-		rbtree_reverse_iterator(){
+		rbtree_reverse_iterator() {
 			root_ = NULL;
 			base_ = NULL;
 		}
-		rbtree_reverse_iterator(const rbtree_reverse_iterator& another){
-			root_ = another.root_;
-			base_ = another.base_;
+
+		rbtree_reverse_iterator(const rbtree_reverse_iterator& rhs) {
+			root_ = rhs.root_;
+			base_ = rhs.base_;
 		}
-		rbtree_reverse_iterator(node_type* base, node_type* root){
+		
+		rbtree_reverse_iterator(node_type* base, node_type* root) {
 			root_ = root;
 			base_ = base;
 		}
-		~rbtree_reverse_iterator(){
 
-		}
+		~rbtree_reverse_iterator() {}
 
-		rbtree_reverse_iterator& operator=(const rbtree_reverse_iterator& another){
-			root_ = another.root_;
-			base_ = another.base_;
+		rbtree_reverse_iterator& operator=(const rbtree_reverse_iterator& rhs) {
+			root_ = rhs.root_;
+			base_ = rhs.base_;
 
 			return *this;
 		}
-		bool operator==(const rbtree_reverse_iterator& another){
-			return base_ == another.base_;
+		bool operator==(const rbtree_reverse_iterator& rhs) {
+			return base_ == rhs.base_;
 		}
-		bool operator!=(const rbtree_reverse_iterator& another){
-			return !(*this == another);
+		bool operator!=(const rbtree_reverse_iterator& rhs) {
+			return !(*this == rhs);
 		}
 
 		node_type* base() const {
@@ -186,76 +207,96 @@ namespace ft {
 		}
 
 		reference operator*() const {
-			if (base_ == NULL){
+			if (base_ == NULL) {
 					return min_()->value;
 			}
 
 			return base_->value;
 		}
+
 		pointer operator->() const {
-			if (base_ == NULL){
+			if (base_ == NULL) {
 					return &min_()->value;
 			}
 
 			return &base_->value;
 		}
 
-		rbtree_reverse_iterator& operator--(){
-			if (!base_){
+		rbtree_reverse_iterator& operator--() {
+			if (!base_) {
 					base_ = min_();
 					return *this;
 			}
 
-			if (base_->right){
+			if (base_->right) {
 					base_ = base_->right;
 					while (base_->left) base_ = base_->left;
 					return *this;
 			}
-			while (base_->parent && base_ == base_->parent->right) base_ = base_->parent;
+			while (base_->parent && base_ == base_->parent->right) {
+				base_ = base_->parent;
+			}
 			base_ = base_->parent;
 
 			return *this;
 		}
-		rbtree_reverse_iterator& operator++(){
-			if (!base_) return *this;
 
-			if (base_->left){
+		rbtree_reverse_iterator& operator++() {
+			if (!base_) {
+				return *this;
+			}
+			if (base_->left) {
 					base_ = base_->left;
-					while (base_->right) base_ = base_->right;
+					while (base_->right) {
+						base_ = base_->right;
+					}
 					return *this;
 			}
-			while (base_->parent && base_ == base_->parent->left) base_ = base_->parent;
+			while (base_->parent && base_ == base_->parent->left) {
+				base_ = base_->parent;
+			}
 			base_ = base_->parent;
 
 			return *this;
 		}
-		rbtree_reverse_iterator operator--(int){
+
+		rbtree_reverse_iterator operator--(int) {
 			rbtree_reverse_iterator tmp = *this;
-			if (!base_){
+			if (!base_) {
 					base_ = min_();
 					return tmp;
 			}
 
-			if (base_->right){
+			if (base_->right) {
 					base_ = base_->right;
-					while (base_->left) base_ = base_->left;
+					while (base_->left) {
+						base_ = base_->left;
+					}
 					return tmp;
 			}
-			while (base_->parent && base_ == base_->parent->right) base_ = base_->parent;
+			while (base_->parent && base_ == base_->parent->right) {
+				base_ = base_->parent;
+			}
 			base_ = base_->parent;
 
 			return tmp;
 		}
-		rbtree_reverse_iterator operator++(int){
+
+		rbtree_reverse_iterator operator++(int) {
 			rbtree_reverse_iterator tmp = *this;
-			if (!base_) return tmp;
-			
-			if (base_->left){
+			if (!base_) {
+				return tmp;
+			}
+			if (base_->left) {
 					base_ = base_->left;
-					while (base_->right) base_ = base_->right;
+					while (base_->right) {
+						base_ = base_->right;
+					}
 					return tmp;
 			}
-			while (base_->parent && base_ == base_->parent->left) base_ = base_->parent;
+			while (base_->parent && base_ == base_->parent->left) {
+				base_ = base_->parent;
+			}
 			base_ = base_->parent;
 
 			return tmp;
@@ -266,10 +307,11 @@ namespace ft {
 		node_type* base_;
 
 		node_type* min_() const {
-			if (!root_ ) return NULL;
-
+			if (!root_ ) {
+				return NULL;
+			}
 			node_type* ptr = root_;
-			while (ptr->left){
+			while (ptr->left) {
 					ptr = ptr->left;
 			}
 			

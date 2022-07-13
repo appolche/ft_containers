@@ -10,19 +10,19 @@
 
 namespace ft {
 
-	template <class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::Pair<const Key, T> > >
+	template <class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > >
 
 	class map {
 	public:
 		// It is a function object that compares objects of type std::map::value_type (key-value pairs)
 		// by comparing of the first components of the pairs.
 		// in C++98, it is required to inherit binary_function<value_type,value_type,bool>
-		class value_compare : public std::binary_function<ft::Pair<const Key, T>, ft::Pair<const Key, T>, bool> {
+		class value_compare : public std::binary_function<ft::pair<const Key, T>, ft::pair<const Key, T>, bool> {
 			friend class map;
 
 		public:
 			typedef bool							result_type;
-			typedef ft::Pair<const Key, T>	value_type;
+			typedef ft::pair<const Key, T>	value_type;
 			typedef value_type					first_argument_type;
 			typedef value_type					second_argument_type;
 
@@ -38,7 +38,7 @@ namespace ft {
 
 		typedef Key																key_type;
 		typedef T																mapped_type;
-		typedef ft::Pair<const Key, T>									value_type;
+		typedef ft::pair<const Key, T>									value_type;
 		typedef size_t															size_type;
 		typedef ptrdiff_t														difference_type;
 		typedef Compare														key_compare;
@@ -191,7 +191,7 @@ namespace ft {
 		// Inserts value.
 		// Returns a pair consisting of an iterator to the inserted element (or to the element that prevented the insertion)
 		// and a bool denoting whether the insertion took place.
-		ft::Pair<iterator, bool> insert(const value_type &value)
+		ft::pair<iterator, bool> insert(const value_type &value)
 		{
 			return tree_.insert(value);
 		}
@@ -255,11 +255,11 @@ namespace ft {
 		// The range is defined by two iterators, one pointing to the first element that is not less than key and
 		// another pointing to the first element greater than key.
 		// Alternatively, the first iterator may be obtained with lower_bound(), and the second with upper_bound().
-		ft::Pair<iterator, iterator> equal_range(const Key &key)
+		ft::pair<iterator, iterator> equal_range(const Key &key)
 		{
 			return tree_.equal_range(value_type(key, mapped_type()));
 		}
-		ft::Pair<const_iterator, const_iterator> equal_range(const Key &key) const
+		ft::pair<const_iterator, const_iterator> equal_range(const Key &key) const
 		{
 			return tree_.equal_range(value_type(key, mapped_type()));
 		}
