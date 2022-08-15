@@ -4,8 +4,10 @@ CC		=	clang++
 FLAGS	=	-Wall -Wextra -Werror -std=c++98
 GCC		=	$(CC) $(FLAGS)
 
-SRCS	=	main.cpp vector_test.cpp stack_test.cpp
-CONT_HDRS	=	./containers/Vector.hpp ./containers/Stack.hpp ./containers/Map.hpp \
+SRCS	=	main.cpp vector_test.cpp stack_test.cpp map_tests.cpp pair_test.cpp set_tests.cpp
+
+CONT_HDRS	=	./containers/Vector.hpp ./containers/Stack.hpp ./containers/Map.hpp ./containers/Set.hpp \
+
 UTIL_HDRS	=	./utils/Iterator.hpp ./utils/Type_traits.hpp ./utils/Equal.hpp ./utils/Pair.hpp ./utils/RBTree.hpp \
 					./utils/RBTree_iterator.hpp ./utils/Node.hpp
 
